@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Interactive Web Pages with JavaScript</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Interactive Web Demo</h1>
+
+    <button id="themeToggle" class="btn" aria-pressed="false" title="Toggle dark mode">🌞 Light</button>
+
+    <nav class="dropdown" aria-label="Main menu">
+      <button id="menuBtn" class="btn" aria-haspopup="true" aria-expanded="false" aria-controls="menuList">
+        Menu ▾
+      </button>
+      <ul id="menuList" class="dropdown__menu" role="menu" hidden>
+        <li role="menuitem"><a href="#events">Event Handling</a></li>
+        <li role="menuitem"><a href="#interactive">Interactive Elements</a></li>
+        <li role="menuitem"><a href="#form">Form Validation</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="events" class="card">
+      <h2>Part 1 — Event Handling</h2>
+
+      <div class="grid two">
+        <div class="panel">
+          <h3>1) addEventListener examples</h3>
+          <button id="clickMe" class="btn">Click me</button>
+          <div id="hoverBox" class="box" tabindex="0" aria-label="Hover or focus me">Hover / Focus me</div>
+        </div>
+
+        <div class="panel">
+          <h3>2) Inline vs Listener</h3>
+          <button id="inlineBtn" class="btn" onclick="/* discouraged inline */ alert('Inline handler 👎');">
+            Inline Click
+          </button>
+          <button id="listenerBtn" class="btn">Listener Click</button>
+          <p class="hint">We remove the inline handler in JS and attach a proper listener.</p>
+        </div>
+
+        <div class="panel">
+          <h3>3) Prevent default</h3>
+          <form id="preventForm">
+            <input type="text" name="stub" placeholder="Try submit without text…" />
+            <button type="submit" class="btn">Submit (blocked)</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="interactive" class="card">
+      <h2>Part 2 — Interactive Elements</h2>
+
+      <div class="tabs" role="tablist" aria-label="Demo tabs">
+        <button class="tab is-active" role="tab" aria-selected="true" aria-controls="tab-1" id="tab-btn-1" tabindex="0">Counter</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="tab-2" id="tab-btn-2" tabindex="-1">Slider</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="tab-3" id="tab-btn-3" tabindex="-1">Modal</button>
+      </div>
+
+      <div id="tab-1" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-btn-1">
+        <div class="counter">
+          <p>Score: <span id="score">0</span></p>
+          <div class="btn-row">
+            <button id="inc" class="btn">+1</button>
+            <button id="dec" class="btn">-1</button>
+            <button id="reset" class="btn btn--ghost">Reset</button>
+          </div>
+          <p class="hint">↑ increments, ↓ decrements.</p>
+        </div>
+      </div>
+
+      <div id="tab-2" class="tabpanel" role="tabpanel" aria-labelledby="tab-btn-2">
+        <div class="slider-row">
+          <label for="range">Live slider:</label>
+          <input id="range" type="range" min="0" max="100" value="50" />
+          <output id="rangeValue">50</output>
+        </div>
+      </div>
+
+      <div id="tab-3" class="tabpanel" role="tabpanel" aria-labelledby="tab-btn-3">
+        <button id="openModal" class="btn">Open Modal</button>
+      </div>
+
+      <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+        <div class="modal__dialog" role="document">
+          <header class="modal__header">
+            <h3 id="modalTitle">Example Modal</h3>
+            <button id="closeModal" class="icon-btn" aria-label="Close modal">✕</button>
+          </header>
+          <div class="modal__body">
+            <p>Keyboard-accessible modal with focus trap and ESC to close.</p>
+            <button class="btn" id="modalAction">Do Something</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq">
+        <h3>FAQ (Delegation)</h3>
+        <ul id="faqList" class="faq__list">
+          <li>
+            <button class="faq__q" aria-expanded="false">What is event delegation?</button>
+            <div class="faq__a" hidden>Listening on a parent and handling events for its children.</div>
+          </li>
+          <li>
+            <button class="faq__q" aria-expanded="false">What is debounce?</button>
+            <div class="faq__a" hidden>Delay running a function until input stops.</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mini-dropdown">
+        <button class="btn" data-dd-btn aria-expanded="false">Open mini menu ▾</button>
+        <ul class="mini-dropdown__menu" data-dd-menu hidden>
+          <li><button class="btn btn--ghost" data-toast="Hello from dropdown!">Say Hello</button></li>
+          <li><button class="btn btn--ghost" data-toast="Saved!">Save</button></li>
+        </ul>
+      </div>
+
+      <div class="todo">
+        <h3>Todo (Delegation)</h3>
+        <div class="row">
+          <input id="todoInput" type="text" placeholder="Add task…" />
+          <button id="addTodo" class="btn">Add</button>
+        </div>
+        <ul id="todoList" class="todo__list"></ul>
+      </div>
+    </section>
+
+    <section id="form" class="card">
+      <h2>Part 3 — Custom Form Validation</h2>
+
+      <form id="registerForm" novalidate>
+        <div class="field">
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" required minlength="2" />
+          <small class="error" id="nameError"></small>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required />
+          <small class="error" id="emailError"></small>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="password-row">
+            <input id="password" name="password" type="password" required aria-describedby="pwdHelp" />
+            <button id="togglePwd" type="button" class="icon-btn" aria-pressed="false" aria-label="Show password">👁</button>
+          </div>
+          <small id="pwdHelp" class="hint">At least 8 chars incl. upper, lower, number.</small>
+          <div class="strength" aria-hidden="true"><div class="bar" id="strengthBar"></div></div>
+          <small class="error" id="passwordError"></small>
+        </div>
+
+        <div class="field">
+          <label for="confirm">Confirm password</label>
+          <input id="confirm" name="confirm" type="password" required />
+          <small class="error" id="confirmError"></small>
+        </div>
+
+        <button type="submit" class="btn btn--primary">Create account</button>
+        <div id="formMsg" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="script.js"></script>
+</body>
+</html>
+
